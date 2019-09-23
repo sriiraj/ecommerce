@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript Project</title>
+	<link rel="stylesheet" href="css/style.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="slick/slick-1.8.1/slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="slick/slick-1.8.1/slick/slick-theme.css" charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<nav>
+		<!--<button onclick="topFunction()" id="myBtn" title="Go to top"><img id="edyoda-logo" src="images/EdYodaLogo.png"/></button> -->
+		<div class="left">
+            <span class="logo"><a href="index.html" style="color: black;"><strong>SHOP</strong>LANE</a></span>
+
+			<span class="linked"><a href="#main-wrapper" style="color: black;">CLOTHING</a></span>
+			<span class="linked"><a href="#main-wrapper2" style="color: black;">ACCESSORIES</a></span>
+		</div>
+		<div class="center">
+			<div class="search-box" >
+				<i class="fa fa-search"></i>
+				<input type="text" name="searchbox" placeholder="Search here">
+			</div>
+		</div>
+		<div class="right">
+			<img class="profile"src="images/pro_pic.jpg">
+			<div class="cart" id="carting"><a href="cart.html" style="color: black;"><i class="fa fa-shopping-cart"></i><span id="counting">0</span></a></div>
+		</div>
+	</nav>
+	<div class="topimage">
+		<div class="slide">
+			<img src="images/img1.png" width="100%">
+		</div>
+		<div class="slide">
+			<img src="images/img2.png" width="100%">
+		</div>
+		<div class="slide">
+			<img src="images/img3.png" width="100%">
+		</div>
+		<div class="slide">
+			<img src="images/img4.png" width="100%">
+		</div>
+	</div>
+	<h2>Clothing for Men and Women</h2>
+	<div id="main-wrapper" class="container">	
+	</div>
+	<h2>Accessories for Men and Women</h2>
+	<div id="main-wrapper2" class="container">	
+	</div>
+	<footer>
+          <div class="container" id="contact">
+              <div>
+                <h3>ONLINE STORE</h3>
+                <ul>
+                  <li><a href="#">Men clothing</a></li>
+                  <li><a href="">Women clothing</a></li>
+                  <li><a href="">Men accessories</a></li>
+                  <li><a href="">Women accessories</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3>HELPFUL LINKS</h3>
+                <ul>
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">About</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3>PARTNERS</h3>
+                <ul>
+                  <li><a href="#">Zara</a></li>
+                  <li><a href="#">Pantaloons</a></li>
+                  <li><a href="#">Levis</a></li>
+                  <li><a href="#">Ucb</a></li>
+                  <li><a href="#">+ Many more</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3>ADDRESS</h3>
+                <ul>
+                  <li><a href="#">Building 101</a></li>
+                  <li><a href="#">Central Avenue</a></li>
+                  <li><a href="#">LA - 902722</a></li>
+                  <li><a href="#">United States</a></li>
+                </ul>
+              </div>
+            </div>
+      </footer>
+	<script>
+    $(document).ready(function(){
+      $('.topimage').slick({
+      	infinite: true,
+  		slidesToShow: 1,
+  		slidesToScroll: 1,
+  		dots: true,
+  		autoplay: true,
+  		autoplaySpeed: 2000,
+  		speed: 500,
+  		fade: true,
+  		cssEase: 'linear'
+      });
+    });
+
+
+var productlist=window.localStorage.getItem('product-list');
+        productlist=productlist===null || productlist===''?[]:productlist;
+        productlist = productlist.length>0 ? JSON.parse(productlist) : [];
+          var totalcount=0;
+         for(var i=0;i<productlist.length;i++)
+          {
+              totalcount=totalcount+productlist[i].count;
+            }  
+        $('#counting').html(totalcount);
+</script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="slick/slick-1.8.1/slick/slick.min.js"></script>
+	<script type="text/javascript" src="js/scripting.js"></script>
+</body>
+</html>

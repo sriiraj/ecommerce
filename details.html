@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript Project</title>
+	<link rel="stylesheet" href="css/style.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="slick/slick-1.8.1/slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="slick/slick-1.8.1/slick/slick-theme.css" charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<nav>
+		<button onclick="topFunction()" id="myBtn" title="Go to top"><img id="edyoda-logo" src="images/EdYodaLogo.png"/></button> 
+		<div class="left">
+            <span class="logo"><a href="index.html" style="color: black;"><strong>SHOP</strong>LANE</a></span>
+
+			<span class="linked"><a href="#main-wrapper" style="color: black;">CLOTHING</a></span>
+			<span class="linked"><a href="#main-wrapper2" style="color: black;">ACCESSORIES</a></span>
+		</div>
+		<div class="center">
+			<div class="search-box" >
+				<i class="fa fa-search"></i>
+				<input type="text" name="searchbox" placeholder="Search here">
+			</div>
+		</div>
+		<div class="right">
+			<img class="profile"src="images/pro_pic.jpg">
+			<div class="cart" id="carting"><a href="cart.html" style="color: black;"><i class="fa fa-shopping-cart"></i><span id="counting">0</span></a></div>
+		</div>
+	</nav>
+	<div id="details-main" class="container">
+		<div class="left-section">
+			<img id="main"class="main-image"src="https://forum.byjus.com/wp-content/themes/qaengine/img/default-thumbnail.jpg">
+		</div>
+		<div class="right-section">
+			<h1 id="Pname">PRODUCT NAME</h1>
+			<h4 id="Pbrand">PRODUCT BRAND</h4>
+			<h3>Price: Rs. <span id="Pprice">xxxx</span></h3>
+			<h3>Description:</h3>
+			<p id="Pdesc">Product description and details will be  mentioned here.........</p>
+			<h3>Preview:</h3>
+			<div id = "buttons"class="button">
+			</div>
+			<br><br>
+			<button class="buy" id="add-to-cart">Add To Cart</button>
+		</div>
+	</div>
+	<footer>
+          <div class="container" id="contact">
+              <div>
+                <h3>ONLINE STORE</h3>
+                <ul>
+                  <li><a href="#">Men clothing</a></li>
+                  <li><a href="">Women clothing</a></li>
+                  <li><a href="">Men accessories</a></li>
+                  <li><a href="">Women accessories</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3>HELPFUL LINKS</h3>
+                <ul>
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">About</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3>PARTNERS</h3>
+                <ul>
+                  <li><a href="#">Zara</a></li>
+                  <li><a href="#">Pantaloons</a></li>
+                  <li><a href="#">Levis</a></li>
+                  <li><a href="#">Ucb</a></li>
+                  <li><a href="#">+ Many more</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3>ADDRESS</h3>
+                <ul>
+                  <li><a href="#">Building 101</a></li>
+                  <li><a href="#">Central Avenue</a></li>
+                  <li><a href="#">LA - 902722</a></li>
+                  <li><a href="#">United States</a></li>
+                </ul>
+              </div>
+            </div>
+      </footer>
+    <script>
+        var productlist=window.localStorage.getItem('product-list');
+        productlist=productlist===null || productlist===''?[]:productlist;
+        productlist = productlist.length>0 ? JSON.parse(productlist) : [];
+          var totalcount=0;
+         for(var i=0;i<productlist.length;i++)
+          {
+              totalcount=totalcount+productlist[i].count;
+            }  
+        $('#counting').html(totalcount);
+        var currentobj=null;
+        var search = location.search;
+        console.log(search);
+        var idd = search.split('=');
+        console.log(idd);
+        var id = idd[idd.length - 1]
+        console.log(id)
+        var url = "https://5d76bf96515d1a0014085cf9.mockapi.io/product/"+id;
+        console.log(url);
+        var btnid = 0;
+        var add = document.getElementById('add-to-cart');
+        var http = new XMLHttpRequest();
+        http.open('GET',url,true);
+        http.send();
+           http.onreadystatechange = function(){
+                if(this.readyState === 4){
+                    if(this.status == 200){
+                        console.log("Call was successful");
+                        var products = JSON.parse(this.responseText);
+                        currentobj=products;
+                        console.log(products);
+                        document.title=products.name;
+                        prodname.innerHTML = products.name;
+                        prodbrand.innerHTML = products.brand;
+                        prodprice.innerHTML = products.price;
+                        proddesc.innerHTML = products.description;
+                        //mainimg.src = products.preview;
+                         main_image.src = products.preview;
+                        var photos = products.photos;
+                        for (var i = 0; i < photos.length; i++) {
+                            /*var imgsrc = photos[i];
+                            createbutton(imgsrc);*/
+                            
+                            var image_prev=document.createElement('img');
+                                image_prev.src=products.photos[i];
+                                image_prev.className='review';
+                                prodview.append(image_prev);
+                        }
+                        
+                        var prev_thumb = document.querySelectorAll('.review');
+                        prev_thumb[0].classList.toggle("review-active");
+                        for (let i=0; i<prev_thumb.length; i++) {
+                            prev_thumb[i].addEventListener('click', function() {
+                                main_image.src = prev_thumb[i].src;
+                                var current = document.getElementsByClassName("review-active");
+                                current[0].className = current[0].className.replace(" review-active", "");
+                                prev_thumb[i].className += " review-active";
+                            })
+                        }
+                        $(".previewimg").click(function() {
+                            var fired_button = $(this).attr("src");
+                            mainimg.src = fired_button;
+                        });	
+                        //			
+                        $('#add-to-cart').click(function(){
+                           // console.log('hi');
+                            //var productlist=window.localStorage.getItem('product-list');
+                           // productlist=productlist===null || productlist===''?[]:productlist;
+                            //productlist = productlist.length>0 ? JSON.parse(productlist) : [];
+                            //productlist.push(currentobj);
+                            //window.localStorage.setItem('product-list',JSON.stringify(productlist));
+                            console.log(productlist);
+                            var foundatpos=-1;
+                            for(var i=0;i<productlist.length;i++)
+                                {
+                                   if(parseInt(productlist[i].id)===parseInt(currentobj.id))
+                                       {
+                                           foundatpos=i;
+  
+                                       }
+                                }
+                            if(foundatpos > -1)
+                                {  
+                                  productlist[foundatpos].count=productlist[foundatpos].count + 1;
+                                  console.log(productlist[foundatpos].count);
+                                  window.localStorage.setItem('product-list',JSON.stringify(productlist)); 
+                                }
+                            else{
+                                currentobj.count=1;
+                                productlist.push(currentobj);
+                                console.log(productlist);
+                                window.localStorage.setItem('product-list',JSON.stringify(productlist));
+                            }
+                            //console.log(productlist);
+                        })
+                    }
+                    else{
+                        console.log("Call Failed");
+                    }
+                    for(var i=0;i<productlist.length;i++)
+                    {
+                      console.log(productlist[i].count);
+                    }
+                }
+
+           }
+        var prodname = document.getElementById('Pname');
+        var prodbrand = document.getElementById('Pbrand');
+        var prodprice = document.getElementById('Pprice');
+        var proddesc = document.getElementById('Pdesc');
+        var prodview = document.getElementById('buttons');
+        //var mainimg = document.getElementById('main');
+        var main_image = document.getElementById('main');
+    </script>
+
+</body>
+</html>
